@@ -1,0 +1,11 @@
+{% extends "core/base.html" %}
+
+
+{% block title %}Questions list {% endblock %}
+
+{% block content %}
+    <a href="{% url "categories:category_list" %}">List of categories </a> <br>
+    {% for question in questions %}
+        <a href = "{% url "questions:questions_detail.html" pk=question.id  %}">{{ question.name |default:"question without title" }}</a><br>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+    <div align="center"> You're login as {{ user.username }}</div> <br>
+    Your questions: <br>
+    {% for question in user.questions.all %}
+        <a href = "{% url "questions:questions_detail.html" pk=question.id  %}">{{ question.name |default:"unnamed question" }}</a><br>
+        {% comment %}
+        (<font color="green">  {{ category.questions.count }} question</font>)<br>
+        {% endcomment %}
+    {% endfor %}
+{% endblock %}

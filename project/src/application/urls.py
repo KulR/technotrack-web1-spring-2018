@@ -13,29 +13,23 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-#from django.conf import settings
+from django.conf import settings
 from django.conf.urls import url, include
 from django.contrib import admin
-from core.views import index, hellopage, log_in, log_out
-from questions.views import question, questions, change_question
-from categories.views import category, categories
+from core.views import index
+from django.views.generic.base import RedirectView
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', index),
-    url(r'^login$', log_in),
-    url(r'^logout$', log_out),
-    url(r'^hello/$', hellopage),
-    url(r'^questions/$', questions),
-    url(r'^question/(\d+)$', question),
-    url(r'^question/(\d+)/change$', change_question),
-    url(r'^categories/$', categories),
-    url(r'^category/(\d+)$', category),
+    url(r'^$', RedirectView.as_view(url='core/')),
+    url(r'^core/', include('core.urls', namespace='core')),
+    url(r'^categories/', include('categories.urls', namespace='categories')),
+    url(r'questions/', include('questions.urls', namespace='questions')),
 ]
 
-
-#if settings.DEBUG:
-#    import debug_toolbar
-#    urlpatterns = [
-#        url(r'^__debug__/', include(debug_toolbar.urls)),
-#    ] + urlpatterns
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+                      url(r'^__debug__/', include(debug_toolbar.urls)),
+                  ] + urlpatterns

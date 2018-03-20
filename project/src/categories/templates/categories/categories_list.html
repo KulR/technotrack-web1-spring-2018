@@ -1,0 +1,11 @@
+{% extends "core/base.html" %}
+
+
+{% block title %}Categories list {% endblock %}
+
+{% block content %}
+    {% for category in categories %}
+        <a href = "{% url "categories:category_detail" pk=category.id  %}">{{ category.name |default:"category without name" }}</a>
+        (<font color="green">  {{ category.questions.count }} question</font>)<br>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+    <div align="center"> You're logout, goodbye!</div> <br>
+    <a href="{% url "core:login" %}"> Log in again </a>
+        {% comment %}
+    Your questions: <br>
+    {% for question in user.questions.all %}
+        <a href = "{% url "questions:questions_detail.html" pk=question.id  %}">{{ question.name |default:"unnamed question" }}</a><br>
+
+        (<font color="green">  {{ category.questions.count }} question</font>)<br>
+    {% endfor %}
+    {% endcomment %}
+{% endblock %}

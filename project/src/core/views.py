@@ -15,9 +15,12 @@ def index(request):
 
 
 def log_in(request):
-    name = request.GET.get('name')
-    return HttpResponse("Hello {}".format(name))
+    return render(request, 'core/login.html')
 
 
 def log_out(request):
-    return HttpResponse("You loged out. Goodbye!")
+    return render(request, 'core/logout.html')
+
+def lk(request):
+    context = {}
+    return render(request, 'core/lk.html')

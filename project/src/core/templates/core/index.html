@@ -1,5 +1,9 @@
-<a href="/hello"> Приветствие<br></a>
-<a href="/login"> Вход<br></a>
-<a href="/logout"> Выход<br></a>
-<a href="/categories"> Вопросы<br></a>
-<a href="/questions"> Категории<br></a>
+{% extends "core/base.html" %}
+
+{% block content %}
+<a href="{% url "core:hello" %}"> Приветствие<br></a>
+<a href="{% url "core:login" %}"> Вход<br></a>
+<a href="{% url "core:logout" %}"> Выход<br></a>
+<a href="{% url "questions:questions_list" %}"> Вопросы<br></a>
+<a href="{% url "categories:category_list" %}"> Категории<br></a>
+{% endblock %}
