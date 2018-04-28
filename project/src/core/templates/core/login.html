@@ -1,7 +1,15 @@
 {% extends "core/base.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
     <div align="center"> Please enter your username and password</div> <br>
-    Username:<br>
-    Password:<br>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div align="center">
+            {{ form|crispy }}
+            <input type="submit" value="Login">
+        </div>
+        <br>
+    </form>
+
 {% endblock %}

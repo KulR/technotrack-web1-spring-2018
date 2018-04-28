@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'questions.apps.QuestionsConfig',
     'comments.apps.CommentsConfig',
     'likes.apps.LikesConfig',
+    'crispy_forms',
 ]
 
 AUTH_USER_MODEL = 'core.User'
@@ -93,6 +94,7 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'application.wsgi.application'
 
 # Database
@@ -143,3 +145,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = ''
+
+MEDIA_ROOT = 'media/'
+MEDIA_URL = '/media/'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOGIN_URL = 'core:login'
+LOGIN_REDIRECT_URL = 'core:lk'

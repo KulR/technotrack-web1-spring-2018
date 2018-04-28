@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.conf import settings
+from likes.models import Like
+from django.contrib.contenttypes.fields import GenericRelation
 
 
 class Comment(models.Model):
@@ -13,6 +15,7 @@ class Comment(models.Model):
     comment = models.ForeignKey('self', blank=True, null=True, related_name='comments',
                                 verbose_name=u'Родительский комментарий')
     text = models.TextField(verbose_name=u'Содержание комментария')
+    likes = GenericRelation(Like, null=True, blank=True)
     is_archive = models.BooleanField(default=False)
 
     class Meta:
@@ -30,10 +33,10 @@ class Comment(models.Model):
         result = ""
         if self.comments.all().count() == 0:
             return "{}{}\n{}{}\n{}{}{}\n\n".format("\t"*indent, self, "\t"*indent, self.text,
-                                                   "\t"*indent, self.likes.count(), "Likes")
+                                                   "\t"*indent, self.like.count(), "Likes")
         else:
             result += "{}{}\n{}{}\n{}{}{}\n".format("\t"*indent, self, "\t"*indent, self.text,
-                                                    "\t"*indent, self.likes.count(), "Likes")
+                                                    "\t"*indent, self.like.count(), "Likes")
             for comment in self.comments.all():
                 if not comment.is_archive:
                     result += "{}".format(comment.print_comment(indent+1))

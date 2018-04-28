@@ -20,15 +20,25 @@ from core.views import index
 from django.views.generic.base import RedirectView
 
 
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', RedirectView.as_view(url='core/')),
-    url(r'^core/', include('core.urls', namespace='core')),
+    url(r'^', include('core.urls', namespace='core')),
     url(r'^categories/', include('categories.urls', namespace='categories')),
-    url(r'questions/', include('questions.urls', namespace='questions')),
+    url(r'^questions/', include('questions.urls', namespace='questions')),
+    url(r'^comment/', include('comments.urls', namespace='comments')),
+    url(r'^like/', include('likes.urls', namespace='like')),
+    # url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 ]
 
 if settings.DEBUG:
+    if settings.MEDIA_ROOT:
+        urlpatterns += static(settings.MEDIA_URL,
+                              document_root=settings.MEDIA_ROOT)
+
+    urlpatterns += staticfiles_urlpatterns()
     import debug_toolbar
     urlpatterns = [
                       url(r'^__debug__/', include(debug_toolbar.urls)),

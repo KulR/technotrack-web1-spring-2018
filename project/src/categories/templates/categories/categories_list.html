@@ -1,11 +1,31 @@
 {% extends "core/base.html" %}
-
+{% load crispy_forms_tags %}
 
 {% block title %}Categories list {% endblock %}
 
 {% block content %}
-    {% for category in categories %}
-        <a href = "{% url "categories:category_detail" pk=category.id  %}">{{ category.name |default:"category without name" }}</a>
-        (<font color="green">  {{ category.questions.count }} question</font>)<br>
-    {% endfor %}
+    <form action="" method="get">
+        {{ category_list_form|crispy }}
+        <button class="btn-primary">Go</button>
+    </form>
+
+    <table class="table table-sm">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Questions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr class="active">
+                <th scope="row">
+                    <a id="{{ question.id }}"
+                       href="{% url "categories:category_detail" pk=category.id %}">{{ category.name |default:"category without name" }}</a>
+                </th>
+                <td>{{ category.questions.count }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

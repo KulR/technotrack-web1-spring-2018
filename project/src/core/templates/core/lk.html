@@ -1,12 +1,55 @@
 {% extends "core/base.html" %}
+{% load static %}
+
+{% block head %}
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="{% static "core/lk.css" %}"/>
+{% endblock %}
 
 {% block content %}
-    <div align="center"> You're login as {{ user.username }}</div> <br>
-    Your questions: <br>
-    {% for question in user.questions.all %}
-        <a href = "{% url "questions:questions_detail.html" pk=question.id  %}">{{ question.name |default:"unnamed question" }}</a><br>
-        {% comment %}
-        (<font color="green">  {{ category.questions.count }} question</font>)<br>
-        {% endcomment %}
-    {% endfor %}
+    <article>
+        <header class="center">Your questions:</header>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6">
+
+                    <div class="container">
+                        <div class="row">
+                            {% for question in questions %}
+                                <div class="col-12 col-md-6">
+                                    <a class="name" href="{% url "questions:questions_detail" pk=question.id %}">
+                                        {{ question.name |default:"unnamed question" }}</a>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="question-buttons">
+                                        <a class="edit float-left"
+                                           href="{% url "questions:question_change" pk=question.id %}">EDIT</a>
+                                        <form action="{% url "questions:delete_question" pk=question.id %}"
+                                              method="post">
+                                            {% csrf_token %}
+                                            <button class="delete float-left">DELETE</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <br>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-12 col-md-6">
+                    <header class="center"> You're login as {{ user.username }}</header>
+                    {% if False %}
+                    {% endif %}
+                    {% if user.avatar != "" %}
+                        <img src="{{ user.avatar.url }}" class="img-fluid" alt="Responsive image">
+                    {% endif %}
+                    <br><br>
+                    <a href="{% url "questions:new_question" %}">Create question</a>
+                </div>
+            </div>
+        </div>
+
+
+    </article>
 {% endblock %}

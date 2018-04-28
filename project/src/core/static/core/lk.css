@@ -1,0 +1,11 @@
+.question-buttons {
+    overflow: hidden;
+}
+
+.question-buttons .edit:nth-of-type(1) {
+    float: left;
+}
+
+.question-buttons .delete:nth-of-type(2) {
+    float: left;
+}

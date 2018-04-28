@@ -3,6 +3,10 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.conf import settings
+from likes.models import Like
+from django.contrib.contenttypes.fields import GenericRelation
+import os
+
 
 
 class Question(models.Model):
@@ -12,12 +16,14 @@ class Question(models.Model):
     updated = models.DateTimeField(auto_now=True,  verbose_name=u'Время редактирования')
     categories = models.ManyToManyField('categories.Category', related_name='questions', verbose_name=u'Категории')
     text = models.TextField(verbose_name=u'Вопрос')
+    likes = GenericRelation(Like, null=True, blank=True)
     is_archive = models.BooleanField(default=False, verbose_name=u'В архиве')
 
     class Meta:
         verbose_name = u'Вопрос'
         verbose_name_plural = u'Вопросы'
-        ordering = 'id', 'name'
+        ordering = 'name', 'created'
+
 
     def __unicode__(self):
         return self.name

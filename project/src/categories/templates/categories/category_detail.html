@@ -5,7 +5,26 @@
 {% block content %}
 
         <a href="{% url "categories:category_list" %}">List of categories </a> <br>
-    {% for question in questions %}
-        <a href="{% url "questions:questions_detail.html" pk=question.id %}">{{ question.name|default:"unnamed question"}} </a> <br>
-    {% endfor %}
+        <table class="table table-sm">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Author</th>
+            <th scope="col">Created</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for question in questions %}
+            <tr class="active">
+                <th scope="row">
+                    <a id="{{ question.id }}"
+                       href="{% url "questions:questions_detail" pk=question.id %}">{{ question.name |default:"question without title" }}</a>
+                </th>
+                <td>{{ question.author }}</td>
+                <td>{{ question.created }}</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
 {% endblock %}

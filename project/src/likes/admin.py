@@ -8,6 +8,6 @@ from .models import Like
 @admin.register(Like)
 class AdminComment(admin.ModelAdmin):
 
-    list_display = 'id', '__unicode__', 'author', 'question', 'comment'
-    search_fields = 'question__name', 'comment__name', 'author__username', '__unicode__'
+    list_display = 'id', '__unicode__', 'author', 'liked_object'
+    search_fields = 'liked_object', 'author__username', '__unicode__'
     list_filter = 'is_archive', 'author__username'

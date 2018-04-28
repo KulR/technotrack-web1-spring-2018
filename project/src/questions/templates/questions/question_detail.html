@@ -1,21 +1,120 @@
+<!DOCTYPE html>
 {% extends "core/base.html" %}
+{% load static %}
 
-{% block title %} {{ question.name}} {% endblock %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static "questions/question_detail.css" %}"/>
+{% endblock %}
+
+{% block title %} {{ question.name }} {% endblock %}
 
 {% block content %}
-    {{ question.text }}<br>
+    <div class="row">
+        <div class="question-text col-12 col-md-11">
+            {{ question.text }}<br>
+        </div>
+        <div class="col-12 col-md-1">
+            {% if user == question.author or user.is_staff %}
+                <a class="QEditLink" href="{% url "questions:question_change" pk=question.id %}"> EDIT</a>
+            {% endif %}
+        </div>
+    </div>
+
+{#    <a href="{% url 'comments:new_comment' question_id=question.id comment_id=0%}">Comment</a>#}
+    <form action="{% url 'comments:new_comment' %}" method="get">
+        <input type="submit" value="Comment">
+        <input type="hidden" name="question_id" value={{ question.id }}>
+        <input type="hidden" name="prev_comment_id" value={{ None }}>
+    </form>
     Comments:
     {% for comment in comments %}
-        <pre>{{ comment.print_comment }}</pre>
+        <div>
+
+
+            <div class="comment-update">
+                <font class="name">{{ comment }}</font>
+                {% if comment.author == user or user.is_staff %}
+                    <a class="delete" href="{% url 'comments:delete_comment' pk=comment.id %}">delete</a>
+                    <a class="edit" href="{% url 'comments:comment_change' pk=comment.id %}">change</a>
+                {% else %}
+                    <br>
+                {% endif %}
+            </div>
+            {% if not comment.comment is None %}
+                Answer to {{ comment.comment }} <br>
+            {% endif %}
+            {{ comment.text }}<br>
+
+            <div class="comment-like">
+                {% if comment.liked == 1 %}
+                    <font class="name float-left" color="#8b0000">{{ comment.likes_qs.count }}</font>
+                {% else %}
+                    <font class="name float-left">{{ comment.likes_qs.count }}</font>
+                {% endif %}
+
+                <form action="{% url 'like:comment' pk=comment.id %}" method="post">
+                    {% csrf_token %}
+                    <input class="like float-left" type="submit" value="like">
+                </form>
+
+{#                <a href="{% url 'comments:new_comment' q_id=question.id com_id=comment.id%}">Comment</a>#}
+                <form class="comment float-left" action="{% url 'comments:new_comment' %}" method="get">
+                    <input type="submit" value="Comment">
+                    <input type="hidden" name="question_id" value={{ question.id }}>
+                    <input type="hidden" name="prev_comment_id" value={{ comment.id }}>
+                </form>
+            </div>
+        </div>
+        <br>
+
+        {% comment %}
+    for norm comment tree
+
+
+            <div class="media">
+        {% for comment in comments %}
+            <div class="media-body">
+                <h5 class="mt-0">Media heading</h5>
+                some1
+
+                <div class="media mt-3">
+                    <a class="pr-3" href="#"></a>
+                    <div class="media-body">
+                        <h5 class="mt-0">Media heading</h5>
+                        some2
+
+                        <div class="media mt-3">
+                            <a class="pr-3" href="#"></a>
+                            <div class="media-body">
+                                <h5 class="mt-0">Media heading</h5>
+                                some3
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endcomment %}
+
     {% endfor %}
     <br>
-    name: {{ question.name }}<br>
-    author: {{  question.author }}<br>
-    created: {{ question.created|date:"d-m-Y"}}<br>
-    {{ question.likes.count }} Likes<br>
-    This question in categories:
-    {% for category in question.categories.all %}
-        <a href="{% url "categories:category_detail" pk=category.id %}">{{ category.name }} </a>
-        {% if not forloop.last %} , {% endif %}
-    {% endfor %}
+    author: {{ question.author }}<br>
+    created: {{ question.created|date:"d-m-Y" }}<br>
+    <div class="question-like">
+        {% if question.liked == 1 %}
+            <font class="like-question-colored float-left" color="#8b0000">{{ question.likes_qs.count }}</font>
+        {% else %}
+            <font class="like-question float-left">{{ question.likes_qs.count }}</font>
+        {% endif %}
+
+        <form action="{% url 'like:question' pk=question.id %}" method="post">
+            {% csrf_token %}
+            <input class="like float-left" type="submit" value="like">
+        </form>
+        <br> <br>
+        This question in categories:
+        {% for category in question.categories.all %}
+            <a href="{% url 'categories:category_detail' pk=category.id %}">{{ category.name }} </a>
+            {% if not forloop.last %} , {% endif %}
+        {% endfor %}
 {% endblock %}

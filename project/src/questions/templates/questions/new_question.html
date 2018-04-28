@@ -1,0 +1,22 @@
+{% extends "core/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}Create new question{% endblock %}
+{% block content %}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="{% static "tokenize2/tokenize2.min.js" %}"></script>
+    <link href="{% static "tokenize2/tokenize2.min.css" %}" rel="stylesheet"/>
+    <form method="post">
+        {% csrf_token %}
+        {% comment %}
+        {{ form.name.label_tag }}{{ form.name }}
+        {{ form.categories.label_tag }}{{ form.categories }}<br>
+        {{ form.text.label_tag }}{{ form.text }}
+        {% endcomment %}
+        {{ form|crispy }}
+        <button class="btn-primary">create</button>
+    </form>
+
+    <script src="{% static "questions/multiselect.js" %}"></script>
+{% endblock %}
