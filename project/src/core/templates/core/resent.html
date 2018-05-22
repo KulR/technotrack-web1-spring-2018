@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="row">
+        <div id="RecentQuestions" class="col-12 col-md-6">
+            <div>5 Latest Questions</div>
+            {% for question in resent_questions %}
+                <a href="{% url "questions:questions_detail" pk=question.id %}">{{ question.name |default:"question without title" }}</a>
+                <br>
+            {% endfor %}
+        </div>
+        <div id="RecentAnswers" class="col-12 col-md-6">
+            <div>5 Latest Answers in Questions</div>
+            {% for question in resent_answered_questions %}
+                <a href="{% url "questions:questions_detail" pk=question.id %}">{{ question.name |default:"question without title" }}</a>
+                <br>
+            {% endfor %}
+            <br>
+        </div>
+    </div>
+</div>

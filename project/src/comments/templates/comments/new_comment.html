@@ -1,11 +1,12 @@
-{% extends "core/base.html" %}
 {% load crispy_forms_tags %}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 
-{% block title %}Create new comment {{ comment }}{% endblock %}
-{% block content %}
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button class="btn-primary"> create</button>
-    </form>
-{% endblock %}
+{% if comment is not None %}
+<h3>Answer to {{ comment }} </h3>
+{% endif %}
+<form data-success-container-id="dialogBody" data-formtype="ajaxForm" method="post"
+      action="{% url "comments:new_comment" q_id=question_id com_id=comment_id %}">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button class="btn-primary"> create</button>
+</form>

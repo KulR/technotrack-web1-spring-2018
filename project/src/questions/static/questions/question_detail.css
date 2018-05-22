@@ -1,24 +1,8 @@
 .question-text{
      word-wrap: break-word;
+    /*white-space: pre-wrap;*/
 }
 
-.comment-update {
-    overflow: hidden;
+span.liked {
+    color: #8b0000
 }
-
-.comment-update .name:nth-of-type(1) {
-    float: left;
-}
-
-.comment-update .edit:nth-of-type(1) {
-    float: left;
-}
-
-.comment-update .delete:nth-of-type(2) {
-    float: left;
-}
-
-.comment-like{
-        overflow: hidden;
-}
-

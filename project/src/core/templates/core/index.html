@@ -2,10 +2,13 @@
 
 {% block content %}
     <h1 align="center"> overwrite Stackowerflow</h1>
-    <nav>
-        <a href="{% url "core:login" %}"> Вход<br></a>
-        <a href="{% url "core:logout" %}"> Выход<br></a>
-        <a href="{% url "questions:questions_list" %}"> Вопросы<br></a>
-        <a href="{% url "categories:category_list" %}"> Категории<br></a>
-    </nav>
+{#    <nav>#}
+{#        <a href="{% url "core:login" %}"> Вход<br></a>#}
+{#        <a href="{% url "core:logout" %}"> Выход<br></a>#}
+{#        <a href="{% url "questions:questions_list" %}"> Вопросы<br></a>#}
+{#        <a href="{% url "categories:category_list" %}"> Категории<br></a>#}
+{#    </nav>#}
+
+    {% include "core/resent.html" %}
+
 {% endblock %}

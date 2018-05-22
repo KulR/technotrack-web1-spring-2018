@@ -1,0 +1,77 @@
+{#{% load static %}#}
+{#{% include 'core/libraries_connection.html' %}#}
+{#<link rel="stylesheet" type="text/css" href="{% static "questions/question_comments.css" %}"/>#}
+{% for comment in comments %}
+    <div class="container">
+        <div class="row">
+            <div class="comment-update col-12 col-md-10">
+                <span class="name float-left">{{ comment }}</span>
+                {#                {% if comment.author == user or user.is_staff %}#}
+                {#            <form href="{% url 'comments:delete_comment' pk=comment.id %}" method="post">#}
+                {#                {% csrf_token %}#}
+                {#                <input class="delete float-left btn btn-link" type="submit" value="delete">#}
+                {#                <button class="delete float-left btn btn-link" type="submit">delete</button>#}
+                {#            </form>#}
+                {#            <a class="delete" href="{% url 'comments:delete_comment' pk=comment.id %}">delete</a>#}
+                {#            <a class="edit CEditLink" href="{% url 'comments:comment_change' pk=comment.id %}">change</a>#}
+                {#            <button class="edit CEditLink btn btn-link" href="{% url 'comments:comment_change' pk=comment.id %}" type="submit">#}
+                {#                change#}
+                {#            </button>#}
+                {#                {% endif %}#}
+                <br>
+                {% if not comment.comment is None %}
+                    Answer to {{ comment.comment }} <br>
+                {% endif %}
+                <div class="comment-text">{{ comment.text }}<br></div>
+            </div>
+
+            <div class="col-12 col-md-2">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Interaction
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <a class="comment CNewLink dropdown-item"
+                           href="{% url 'comments:new_comment' q_id=question.id com_id=comment.id %}">Comment</a>
+                        {% if comment.author == user or user.is_staff %}
+                            <div class="dropdown-divider"></div>
+                            <form href="{% url 'comments:delete_comment' pk=comment.id %}" method="post">
+                                {% csrf_token %}
+                                <input class="delete float-left btn btn-link dropdown-item" type="submit"
+                                       value="delete">
+                            </form>
+                            <a class="edit CEditLink dropdown-item"
+                               href="{% url 'comments:comment_change' pk=comment.id %}">change</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment-interaction col-12 col-md-12">
+        {% if comment.liked == 1 %}
+            <span id="comment_{{ comment.id }}_likes"
+                  class="likes_count liked float-left">{{ comment.likes_qs.count }}</span>
+        {% else %}
+            <span id="comment_{{ comment.id }}_likes" class="likes_count float-left">{{ comment.likes_qs.count }}</span>
+        {% endif %}
+
+        <form data-success-id="comment_{{ comment.id }}_likes" action="{% url 'like:comment' pk=comment.id %}"
+              method="post">
+            {% csrf_token %}
+            {#            <input id="comment_{{ comment.id }}_like" class="like float-left" type="submit" value="like">#}
+            <input class="like float-left" type="submit" value="like">
+
+        </form>
+        {#        <a class="comment float-left"#}
+        {#           href="{% url 'comments:new_comment' q_id=question.id com_id=comment.id %}">Comment</a>#}
+        {#        <form class="comment float-left" action="{% url 'comments:new_comment' %}" method="get">#}
+        {#            <input type="submit" value="Comment">#}
+        {#            <input type="hidden" name="question_id" value={{ question.id }}>#}
+        {#            <input type="hidden" name="prev_comment_id" value={{ comment.id }}>#}
+        {#        </form>#}
+    </div>
+    <br>
+{% endfor %}

@@ -33,11 +33,12 @@ class Comment(models.Model):
         result = ""
         if self.comments.all().count() == 0:
             return "{}{}\n{}{}\n{}{}{}\n\n".format("\t"*indent, self, "\t"*indent, self.text,
-                                                   "\t"*indent, self.like.count(), "Likes")
+                                                   "\t"*indent, self.likes.count(), "Likes")
         else:
             result += "{}{}\n{}{}\n{}{}{}\n".format("\t"*indent, self, "\t"*indent, self.text,
-                                                    "\t"*indent, self.like.count(), "Likes")
+                                                    "\t"*indent, self.likes.count(), "Likes")
             for comment in self.comments.all():
                 if not comment.is_archive:
                     result += "{}".format(comment.print_comment(indent+1))
             return result
+

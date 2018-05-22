@@ -11,4 +11,6 @@ urlpatterns = [
     url(r'^logout$', login_required(core_views.Logout.as_view()), name='logout'),
     url(r'^lk/$', login_required(core_views.lk), name='lk'),
     url(r'^register/$', core_views.register, name='register'),
+    url(r'^settings/$', core_views.UpdateUser.as_view(), name='settings'),
+    url(r'^change_password/$', login_required(core_views.change_password), name='change_password'),
 ]

@@ -1,17 +1,31 @@
-{% extends "core/base.html" %}
 {% load crispy_forms_tags %}
 {% load static %}
 
-{% block title %}Update question {{ question }}{% endblock %}
-{% block content %}
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="{% static "tokenize2/tokenize2.min.js" %}"></script>
-    <link href="{% static "tokenize2/tokenize2.min.css" %}" rel="stylesheet"/>
+{#{% include "core/libraries_connection.html" %}#}
+{#<script src="{% static "core/base.js" %}"></script>#}
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button class="btn-primary">Update</button>
-    </form>
-    <script src="{% static "questions/multiselect.js" %}"></script>
-{% endblock %}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<!-- tokenize2 -->
+<script src="{% static "tokenize2/tokenize2.min.js" %}"></script>
+<link href="{% static "tokenize2/tokenize2.min.css" %}" rel="stylesheet"/>
+<script src="{% static "questions/multiselect.js" %}"></script>
+
+{#<!-- Bootstrap CSS -->#}
+{#<link rel="stylesheet" href="{% static "bootstrap/dist/css/bootstrap.min.css" %}">#}
+{#<!-- Custom styles for this template -->#}
+{#<link href="{% static "core/base.css" %}" rel="stylesheet">#}
+{##}
+{#<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>#}
+{#<link href="{% static "tokenize2/tokenize2.min.css" %}" rel="stylesheet"/>#}
+{#<script src="{% static "tokenize2/tokenize2.min.js" %}"></script>#}
+
+
+<form data-success-container-id="dialogBody" data-formtype="ajaxForm" method="post" action="{% url "questions:question_change" pk=question.pk %}">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <input type="submit" class="btn btn-primary" value="Save changes">
+
+{#    <button class="btn-primary">Update</button>#}
+</form>
+

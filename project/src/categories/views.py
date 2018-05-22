@@ -14,9 +14,13 @@ def category_list(request):
             categories = categories.order_by(form.cleaned_data['sort'])
         if form.cleaned_data['search']:
             categories = categories.filter(name__icontains=form.cleaned_data['search'])
+    categories_list = []
+    for category in categories:
+        category.questions_qs = category.questions.filter(is_archive=False)
+        categories_list.append(category)
     context = {
         'category_list_form': form,
-        'categories': categories,
+        'categories': categories_list,
     }
     return render(request, 'categories/categories_list.html', context)
 
@@ -24,9 +28,17 @@ def category_list(request):
 def category_detail(request, pk):
 
     category = get_object_or_404(Category, id=pk)
+    questions = category.questions.all().filter(is_archive=False)
+    # comment_list = []
+    # for question in questions:
+    #     question.likes_qs = comment.likes.filter(is_archive=False)
+    #     comment.liked = 0
+    #     if request.user.id is not None:
+    #         comment.liked = comment.likes.filter(is_archive=False, author=request.user).count()
+    #     comment_list.append(comment)
     context = {
         'category': category,
-        'questions': category.questions.all().filter(is_archive=False),
+        'questions': questions,
     }
     return render(request, 'categories/category_detail.html', context)
 

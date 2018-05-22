@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="question-buttons">
-                                        <a class="edit float-left"
+                                        <a data-toggle="modal" data-target="#myModal" class="QEditLink edit float-left"
                                            href="{% url "questions:question_change" pk=question.id %}">EDIT</a>
                                         <form action="{% url "questions:delete_question" pk=question.id %}"
                                               method="post">
@@ -45,7 +45,8 @@
                         <img src="{{ user.avatar.url }}" class="img-fluid" alt="Responsive image">
                     {% endif %}
                     <br><br>
-                    <a href="{% url "questions:new_question" %}">Create question</a>
+                    <a id="QNewLink" href="{% url "questions:new_question" %}" data-toggle="modal" data-target="#myModal">Create question</a><br>
+                    <a href="{% url "core:settings" %}">Settings</a>
                 </div>
             </div>
         </div>
