@@ -1,9 +1,5 @@
 $(document).ready(function () {
 
-    // $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
-    //     options.async = true;
-    // });
-
     $('#id_categories').tokenize2();
 
     // function openDialog() {
@@ -36,7 +32,7 @@ $(document).ready(function () {
 
 
     $(document).on('click', '.CNewLink', function (event) {
-        openDialog();
+        //openDialog();
         $('#modalHeaderTitle').replaceWith("<h1>Create new comment</h1>");
         $.get(this.href, function (data) {
             $('#dialogBody').html(data)
@@ -45,7 +41,7 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '.CEditLink', function (event) {
-        openDialog();
+        //openDialog();
         $('#modalHeaderTitle').replaceWith('<h1>Update comment</h1>');
         $.get(this.href, function (data) {
             $('#dialogBody').html(data)

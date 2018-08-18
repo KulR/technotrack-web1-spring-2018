@@ -19,7 +19,7 @@
                 {#            </button>#}
                 {#                {% endif %}#}
                 <br>
-                {% if not comment.comment is None %}
+                {% if comment.comment %}
                     Answer to {{ comment.comment }} <br>
                 {% endif %}
                 <div class="comment-text">{{ comment.text }}<br></div>
@@ -32,7 +32,7 @@
                         Interaction
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                        <a class="comment CNewLink dropdown-item"
+                        <a class="comment CNewLink dropdown-item" data-toggle="modal" data-target="#myModal"
                            href="{% url 'comments:new_comment' q_id=question.id com_id=comment.id %}">Comment</a>
                         {% if comment.author == user or user.is_staff %}
                             <div class="dropdown-divider"></div>
@@ -41,7 +41,7 @@
                                 <input class="delete float-left btn btn-link dropdown-item" type="submit"
                                        value="delete">
                             </form>
-                            <a class="edit CEditLink dropdown-item"
+                            <a class="edit CEditLink dropdown-item" data-toggle="modal" data-target="#myModal"
                                href="{% url 'comments:comment_change' pk=comment.id %}">change</a>
                         {% endif %}
                     </div>

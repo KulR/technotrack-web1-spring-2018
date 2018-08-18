@@ -21,7 +21,7 @@
                     Interaction
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    <a class="comment CNewLink dropdown-item"
+                    <a class="comment CNewLink dropdown-item" data-toggle="modal" data-target="#myModal"
                        href="{% url 'comments:new_comment' q_id=question.id com_id=0 %}">Comment</a>
                     {% if question.author == user or user.is_staff %}
                         <div class="dropdown-divider"></div>
@@ -30,8 +30,8 @@
                             <input class="btn btn-link dropdown-item" type="submit"
                                    value="delete">
                         </form>
-                        <a class="QEditLink dropdown-item" href="{% url "questions:question_change" pk=question.id %}">
-                            edit</a>
+                        <a class="QEditLink dropdown-item" data-toggle="modal" data-target="#myModal"
+                           href="{% url "questions:question_change" pk=question.id %}">edit</a>
                     {% endif %}
                 </div>
             </div>

@@ -44,9 +44,11 @@
                 </li>
             </ul>
             <ul class="nav nav-pills nav-fill">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url "core:settings" %}">Settings</a>
-                </li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url "core:settings" %}">Settings</a>
+                    </li>
+                {% endif %}
                 {% if request.user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url "core:logout" %}">Log out</a>
